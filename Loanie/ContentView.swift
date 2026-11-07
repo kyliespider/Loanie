@@ -1,82 +1,149 @@
-//
-//  ContentView.swift
-//  Loanie
-//
-//  Created by Kajetan Pająkowski on 06/11/2026.
-//
-
 import SwiftUI
-import SwiftData
+
+enum AppTab: Hashable {
+    case people
+    case transactions
+    case search
+    case settings
+    case add
+}
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
+    @State private var selectedTab: AppTab = .people
+    @State private var previousTab: AppTab = .people
+    @State private var showAddPane = false
 
     var body: some View {
-        NavigationViewWrapper {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+        // Keep TabView at the root level so the native tab bar stays attached to the bottom.
+        TabView(selection: $selectedTab) {
+            Tab("People", systemImage: "person.crop.circle", value: .people) {
+                CardViewPeople(color1: .blue)
+            }
+            Tab("Transactions", systemImage: "list.bullet.indent", value: .transactions) {
+                CardView(title: Text("The transaction list will be here"), color: .orange)
+            }
+            Tab("Search", systemImage: "magnifyingglass", value: .search) {
+                CardView(
+                    title: Text("Search will be here! \(Image(systemName: "face.smiling"))"),
+                    color: .pink
+                )
+            }
+            Tab("Settings", systemImage: "gearshape.fill", value: .settings) {
+                CardView(title: Text("Settings will be here"), color: .red)
+            }
+
+            // Prominent native action tab displayed separately on the trailing side.
+            Tab("Add", systemImage: "plus.forwardslash.minus", value: .add, role: .prominent) {
+                EmptyView()
+            }
+        }
+        .tint(Color.accentColor)
+        .onChange(of: selectedTab) { _, newTab in
+            if newTab == .add {
+                selectedTab = previousTab
+                showAddPane = true
+            } else {
+                previousTab = newTab
+            }
+        }
+        .sheet(isPresented: $showAddPane) {
+            AddPane()
+        }
+        .tabViewStyle(.tabBarOnly)
+    }
+}
+// hm
+// Defines the screen presented by the Add action tab.
+struct AddPane: View {
+    @Environment(\.dismiss) private var dismiss
+	@State private var transactionAmount = ""
+	@FocusState private var isTransactionAmountFocused: Bool
+	func closeAddPane() {
+		dismiss()
+		isTransactionAmountFocused = false
+	}
+
+    var body: some View {
+        NavigationStack {
+		   TextField("", text: $transactionAmount)
+			   .textFieldStyle(.roundedBorder)
+			   .font(.custom("Iosevka-Etoile-Extralight", size: 50))
+			   .keyboardType(.decimalPad)
+			   .focused($isTransactionAmountFocused)
+                .navigationSubtitle("Add a transaction")
+                .toolbar {
+                    ToolbarItem {
+                        Button {
+                            dismiss()
+
+                        } label: {
+                            Image(systemName: "xmark")
+                        }
+                        .accessibilityLabel("Close")
                     }
                 }
-                .onDelete(perform: deleteItems)
+			 .task{
+				 isTransactionAmountFocused = true
+			 }
+        }
+    }
+}
+
+struct CardViewPeople: View {
+    let color1: Color
+
+    var body: some View {
+        NavigationStack {
+            VStack {
+                RoundedRectangle(cornerRadius: 24)
+                    .fill(color1.gradient)
+                    .overlay {
+                        Text("People will be here")
+                            .font(.title)
+                            .fontWeight(.bold)
+                            .foregroundStyle(.white)
+                    }
+                    .padding()
+                    .aspectRatio(1, contentMode: .fit)
+                    .frame(maxWidth: 300, maxHeight: 300)
+                    .padding()
+                Spacer()
             }
-#if os(macOS)
-            .navigationSplitViewColumnWidth(min: 180, ideal: 200)
-#endif
             .toolbar {
-#if os(iOS)
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-#endif
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        // Add person action will be wired here.
+                    } label: {
+                        Image(systemName: "person.crop.circle.badge.plus")
+                            .foregroundColor(.contrast)
                     }
+                    .accessibilityLabel("Add person")
                 }
-            }
-        }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
             }
         }
     }
 }
 
-fileprivate struct NavigationViewWrapper<Content: View>: View {
-    let content: () -> Content
+struct CardView: View {
+    let title: Text
+    let color: Color
 
     var body: some View {
-#if os(macOS)
-        NavigationSplitView {
-            content()
-        } detail: {
-            Text("Select an item")
-        }
-#else
-        NavigationStack {
-            content()
-        }
-#endif
+        RoundedRectangle(cornerRadius: 24)
+            .fill(color.gradient)
+            .overlay {
+                title
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .foregroundStyle(.white)
+            }
+            .padding()
+            .aspectRatio(1, contentMode: .fit)
+            .frame(maxWidth: 300, maxHeight: 300)
+            .padding()
     }
 }
 
 #Preview {
     ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
 }

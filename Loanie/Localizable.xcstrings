@@ -1,0 +1,167 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "" : {
+
+    },
+    "Add" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dodaj"
+          }
+        }
+      }
+    },
+    "Add a transaction" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dodaj transakcję"
+          }
+        }
+      }
+    },
+    "Add person" : {
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dodaj osobę"
+          }
+        }
+      }
+    },
+    "Add something here" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dodaj coś tutaj"
+          }
+        }
+      }
+    },
+    "Close" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zamknij"
+          }
+        }
+      }
+    },
+    "People" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "People"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Osoby"
+          }
+        }
+      }
+    },
+    "People will be here" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tutaj będą osoby"
+          }
+        }
+      }
+    },
+    "Search" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Szukaj"
+          }
+        }
+      }
+    },
+    "Search will be here!" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tutaj będzie wyszukiwarka!"
+          }
+        }
+      }
+    },
+    "Search will be here! %@" : {
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tutaj będzie wyszukiwarka!"
+          }
+        }
+      }
+    },
+    "Settings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opcje"
+          }
+        }
+      }
+    },
+    "Settings will be here" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tutaj będą ustawienia"
+          }
+        }
+      }
+    },
+    "The transaction list will be here" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tutaj będzie lista transakcji"
+          }
+        }
+      }
+    },
+    "Transactions" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transakcje"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.3"
+}
